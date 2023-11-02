@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "~/Views/Admin/_Layout.cshtml";
+    ViewData["Title"] = ViewBag.Title;
+}
+
+@model Product
+
+
+<h4 class="text-center m-4">@ViewBag.Title</h4>
+
+<form asp-action="AddOrUpdate" method="post">
+    <div asp-validation-summary="All" class="text-center text-danger"></div>
+    <div class="row">
+        @if (Model.Id != 0)
+        {
+            <div class="row m-2 justify-content-center">
+                <label class="col-2 form-label">Id</label>
+                <div class="col-4">
+                    <input class="form-control" asp-for="Id" readonly />
+                </div>
+            </div>
+        }
+
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Название</label>
+            <div class="col-4">
+                <input class="form-control" asp-for="Name" />
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Описание</label>
+            <div class="col-4">
+                <textarea class="form-control" asp-for="Description"></textarea>
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Категории</label>
+            <div class="col-4">
+                <select class="form-control" asp-for="CategoryId">
+                    @foreach (Category category in ViewBag.Categories)
+                    {
+                        <option selected="@(category.Id==Model.CategoryId)" value="@category.Id">@category.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Производитель</label>
+            <div class="col-4">
+                <input class="form-control" asp-for="DeveloperCompany" />
+                <span class="text-danger" asp-validation-for="DeveloperCompany"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Дата релиза</label>
+            <div class="col-4">
+                <input type="date" class="form-control" asp-for="Released" />
+                <span class="text-danger" asp-validation-for="Released"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Оптовая цена</label>
+            <div class="col-4">
+                <input class="form-control" asp-for="PurchasePrice" />
+                <span class="text-danger" asp-validation-for="PurchasePrice"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Розничная цена</label>
+            <div class="col-4">
+                <input class="form-control" asp-for="RetailPrice" />
+                <span class="text-danger" asp-validation-for="RetailPrice"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <button type="submit" class="col-1 btn btn-sm btn-primary m-2">Сохранить</button>
+            <a asp-action="Index" class="col-1 btn btn-secondary btn-sm m-2">Отмена</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

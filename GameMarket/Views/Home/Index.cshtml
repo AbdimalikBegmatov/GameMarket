@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = ViewBag.Title;
+}
+
+@model PagedList<Article>
+
+<div class="text-center">
+    <h3 class="h3">@ViewBag.Title</h3>
+    <div>
+        <vc:new-products></vc:new-products>
+    </div>
+
+    <h3 class="h3">Все статьи</h3>
+    <div class="row row-cols-4">
+        @foreach (Article article in Model)
+        {
+            <div class="col">
+                <div class="card m-3" style="width: 18rem;height:22rem">
+                    <img src="@article.ImageUrl" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <h5 class="card-title">@article.Title</h5>
+                        <p class="card-text">@article.EditTime.ToShortDateString()</p>
+                        <a asp-action="Detail" asp-controller="Article" asp-route-id="@article.Id" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    @Html.Partial("_Page",Model)
+</div>

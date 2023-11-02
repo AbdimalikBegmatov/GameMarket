@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Views/Admin/_Layout.cshtml";
+    ViewData["Title"] = ViewBag.Title;
+}
+
+@model Product
+
+<h4 class="text-center m-4">@ViewBag.Title</h4>
+
+<div class="row">
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Id</label>
+        <label class="col-4 form-label">@Model.Id</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Название</label>
+        <label class="col-4 form-label">@Model.Name</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Описание</label>
+        <label class="col-4 form-label">@Model.Description</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Разработчик</label>
+        <label class="col-4 form-label">@Model.DeveloperCompany</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Категории</label>
+        <label class="col-4 form-label">@Model.Category.Name</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Оптовая цена</label>
+        <label class="col-4 form-label">@Model.PurchasePrice</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Розничная цена</label>
+        <label class="col-4 form-label">@Model.RetailPrice</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Категории</label>
+        <label class="col-4 form-label">@Model.Released.ToShortDateString()</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Добавленное время</label>
+        <label class="col-4 form-label">@Model.AddedTime</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <label class="col-2 form-label">Последние изменение</label>
+        <label class="col-4 form-label">@Model.EditedTime</label>
+    </div>
+    <div class="row m-2 justify-content-center">
+        <button class="col-1 btn btn-primary btn-sm m-2"><a class="text-white text-decoration-none" asp-action="AddOrUpdate" asp-route-id="@Model.Id">Редактировать</a></button>
+        <button class="col-1 btn btn-secondary btn-sm m-2"><a class="text-white text-decoration-none" asp-action="Index">Назад</a></button>
+    </div>
+    
+</div>

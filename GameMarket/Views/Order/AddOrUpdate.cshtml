@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Admin/_Layout.cshtml";
+    ViewData["Title"] = ViewBag.Title;
+}
+
+@model Order
+
+
+<h4 class="text-center m-4">@ViewBag.Title</h4>
+
+<form asp-action="AddOrUpdate" method="post">
+    <div asp-validation-summary="All" class="text-center text-danger"></div>
+    <div class="row">
+        @if (Model.Id != 0)
+        {
+            <div class="row m-2 justify-content-center">
+                <label class="col-2 form-label">Id</label>
+                <div class="col-4">
+                    <input class="form-control" asp-for="Id" readonly />
+                </div>
+            </div>
+        }
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Имя покупателя</label>
+            <div class="col-4">
+                <input class="form-control" asp-for="CustumerName" />
+                <span class="text-danger" asp-validation-for="CustumerName"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Адресс</label>
+            <div class="col-4">
+                <input class="form-control" asp-for="Address" />
+                <span class="text-danger" asp-validation-for="Address"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Область</label>
+            <div class="col-4">
+                <input class="form-control" asp-for="State" />
+                <span class="text-danger" asp-validation-for="State"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Zip code</label>
+            <div class="col-4">
+                <input class="form-control" asp-for="ZipCode" />
+                <span class="text-danger" asp-validation-for="ZipCode"></span>
+            </div>
+        </div>
+        <div class="row m-2 justify-content-center">
+            <label class="col-2 form-label">Отправлено</label>
+            <div class="col-4">
+                <input type="checkbox" class="form-check" asp-for="Shipped" />
+            </div>
+        </div>
+    </div>
+    <h6 class="mt-1 p-2 bg-primary text-white text-center">
+        Заказанные товары
+    </h6>
+    @{
+        int counter = 0;
+    }
+
+
+    @foreach (OrderLines line in ViewBag.Lines)
+    {
+        <input type="hidden" name="OrderLines[@counter].Id" value="@line.Id" />
+        <input type="hidden" name="OrderLines[@counter].ProductId" value="@line.ProductId" />
+        <input type="hidden" name="OrderLines[@counter].OrderId" value="@line.OrderId" />
+
+        <div class="row mt-1">
+            <div class="col">@line.Product.Name</div>
+            <div class="col">@line.Product.Category.Name</div>
+            <div class="col">
+                <input type="number" name="OrderLines[@counter].Quantity" value="@line.Quantity" />
+            </div>
+        </div>
+        counter++;
+    }
+
+
+    <div class="row-cols-2 m-3 text-center">
+        <button class="col-2 btn btn-sm btn-primary" type="submit">Сохранить</button>
+        <a asp-action="Index" class="col-2 btn btn-sm btn-secondary">Отмена</a>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

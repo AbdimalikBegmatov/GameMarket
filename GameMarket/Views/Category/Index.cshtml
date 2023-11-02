@@ -1,0 +1,81 @@
+﻿@{
+    Layout = "~/Views/Admin/_Layout.cshtml";
+    ViewData["Title"] = ViewBag.Title;
+}
+
+@model PagedList<Category>
+
+<div>
+    <form asp-action="Add" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row row-cols-3">
+            <div class="row m-1 justify-content-center">
+                <label class="col-sm-3 col-form-label-sm">Название</label>
+                <div class="col-sm-6">
+                    <input class="form-control" name="Name" required />
+                </div>
+            </div>
+            <div class="row m-1 justify-content-center">
+                <label class="col-sm-3 col-form-label-sm">Описание</label>
+                <div class="col-sm-9">
+                    <input class="form-control" name="Description" required />
+                </div>
+            </div>
+            <div class="row align-content-center justify-content-center">
+                <div class="col-4">
+                    <button class="btn btn-secondary btn-sm" type="submit">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <h4 class="text-center m-4">@ViewBag.Title</h4>
+    <div class="row mb-2">
+        <label class="col-1">Id</label>
+        <label class="col-2">Название</label>
+        <label class="col-5">Описание</label>
+        <label class="col-4 text-center">Действие</label>
+    </div>
+    @foreach (Category category in Model)
+    {
+        if (ViewBag.EditId == category.Id)
+        {
+            <form asp-action="EditCategory" method="post">
+                <div class="row">
+                    <input class="col-1" value="@category.Id" readonly name="Id" />
+                    <input class="col-2" value="@category.Name" name="Name" />
+                    <input class="col-5" value="@category.Description" name="Description" />
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-sm">Сохранить</button>
+                        <a asp-action="Index" class="btn btn-primary btn-sm m-1">Отмена</a>
+                    </div>
+                </div>
+            </form>
+
+        }
+        else
+        {
+            <div class="row">
+                <label class="col-1">@category.Id</label>
+                <label class="col-2">@category.Name</label>
+                <label class="col-5">@category.Description</label>
+                <label class="col-4">
+                    <div class="row align-items-center justify-content-center">
+                        <a asp-action="Edit" asp-route-id="@category.Id" class="col-3 btn btn-primary btn-sm m-1">Редактировать</a>
+                        <a asp-action="Detail" asp-route-id="@category.Id" class="col-3 btn btn-secondary btn-sm m-1">Подробнее</a>
+                        <div class="col-3">
+                            <form asp-action="Delete" method="post">
+                                <input type="hidden" name="Id" value="@category.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </label>
+            </div>
+        }
+
+    }
+    @Html.Partial("_Page",Model)
+</div>

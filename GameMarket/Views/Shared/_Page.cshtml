@@ -1,0 +1,58 @@
+﻿<form id="pageform">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item @(!Model.HasPreviousPage ? "disabled":"")">
+                    <button name="option.CurrentPage" value="@(Model.CurrentPage-1)" class="page-link" type="submit">Previous</button>
+                </li>
+
+                @if (Model.CurrentPage>1)
+                {
+                    @for (int i = Model.CurrentPage-1; i < Model.CurrentPage; i++)
+                    {
+                        <li class="page-item">
+                            <button name="option.CurrentPage" value="@i" class="page-link" type="submit">@i</button>
+                        </li>
+                    }                    
+                }
+                <li class="page-item active"><a class="page-link" href="#">@Model.CurrentPage</a></li>
+
+                @if (Model.CurrentPage < Model.TotalPage-1)
+                {
+                    <li class="page-item">
+                        <button name="option.CurrentPage" value="@(Model.CurrentPage+1)" class="page-link" type="submit">@(Model.CurrentPage + 1)</button>
+                    </li>
+                }
+               
+
+                @if (Model.CurrentPage < Model.TotalPage && Model.TotalPage > 2)
+                {
+                    <li class="page-item">
+                        ...
+                    </li>
+                    @for (int i = Model.TotalPage; i < Model.TotalPage+1; i++)
+                    {
+                       
+                        <li class="page-item">
+                            <button name="option.CurrentPage" value="@i" class="page-link" type="submit">@i</button>
+                        </li>
+                    }
+                }
+
+                <li class="page-item @(!Model.HasNextPage ? "disabled":"")">
+                    <button name="option.CurrentPage" value="@(Model.CurrentPage+1)" class="page-link" type="submit">Next</button>
+                </li>
+
+                <li class="page-item">
+                    <select name="option.PageSize" class="form-select-sm">
+                    @foreach (int pagesize in new[] {5,10,20,50,100 })
+                    {
+                        <option value="@pagesize" selected="@(Model.PageSize == pagesize)">@pagesize</option>
+                    }
+                    </select>
+                </li>
+                <li class="page-item">
+                    <button name="option.CurrentPage" value="1" class="btn btn-primary btn-sm" type="submit">Изменить колчиества элеменотов</button>
+                </li>
+            </ul>
+        </nav>
+    </form>
